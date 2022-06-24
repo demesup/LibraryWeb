@@ -12,17 +12,17 @@ import static library.objects.LibraryObjects.*;
 public class Library {
     static BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     static String SEPARATOR = File.separator;
-    static String FILE_NAME = "src\\libraryObjects.txt";
+    static String FILE_NAME ="C:\\Users\\User\\IdeaProjects\\Library1\\src\\libraryObjects.txt";
 
     static File file = new File(FILE_NAME);
 
     public static void main(String[] args) {
         if (file.length() > 0) getLastSaving();
         System.out.println("Welcome to library :) Some rules:" +
-                        "\n\t1.You can not enter similar names/surnames/titles" +
-                        "\n\t2.To save data, you need to exit from program properly(saving occurs in the end, if it is completed you will se the message)" +
-                        "\n\t3.Be happy)" +
-                        "\nYou can get to the saving by {exit from field-> exit from library}");
+                "\n\t1.You can not enter similar names/surnames/titles" +
+                "\n\t2.To save data, you need to exit from program properly(saving occurs in the end, if it is completed you will se the message)" +
+                "\n\t3.Be happy)" +
+                "\nYou can get to the saving by {exit from field-> exit from library}");
         try {
             music();
             start();
@@ -92,11 +92,12 @@ public class Library {
                 System.out.println("When the time is over music stops playing." +
                         "\nMusic will not be saved to a file." +
                         "\nIf you enter the number which is not on the list or any other key you will work without music.Press:" +
-                                "\n\t1 - Mozart: Eine Kleine Nachtmusik (5min52sec)" +
-                                "\n\t2 - Mozart: Alla turca from Piano Sonata No 11 (5min51sec)" +
-                                "\n\t3 - Beethoven: Violin romance no 2 (9min50sec)" +
-                                "\n\t4 - Bach: C Major Prelude and Allemande (French Suite No.2) (5min52sec)");
-                String path = "src"  + SEPARATOR + "library" + SEPARATOR + "music" + SEPARATOR;
+                        "\n\t1 - Mozart: Eine Kleine Nachtmusik (5min52sec)" +
+                        "\n\t2 - Mozart: Alla turca from Piano Sonata No 11 (5min51sec)" +
+                        "\n\t3 - Beethoven: Violin romance no 2 (9min50sec)" +
+                        "\n\t4 - Bach: C Major Prelude and Allemande (French Suite No.2) (5min52sec)");
+                String path = "C:" + SEPARATOR + "Users" + SEPARATOR + "User" + SEPARATOR + "IdeaProjects" + SEPARATOR +
+                        "Library1" + SEPARATOR + "src" + SEPARATOR + "library" + SEPARATOR + "music" + SEPARATOR;
 
                 File file;
                 switch (readNumber()) {
@@ -110,8 +111,8 @@ public class Library {
                         file = new File(path + "Beethoven.wav");
                         break;
                     case 4:
-                    file = new File(path + "Bach2.wav");
-                    break;
+                        file = new File(path + "Bach2.wav");
+                        break;
                     default:
                         System.out.println("wrong number");
                         return;
@@ -145,7 +146,7 @@ public class Library {
             }
 
         } catch (Exception e) {
-            if (!askUser("Do you want to exit and save changes?")){
+            if (!askUser("Do you want to exit and save changes?")) {
                 start();
             }
         }

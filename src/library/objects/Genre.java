@@ -63,7 +63,7 @@ public class Genre extends LibraryObjects {
     @Override
     public LibraryObjects remove(List<? extends LibraryObjects> list) throws IOException, ObjectDoesNotExist {
         Genre genre = (Genre) super.remove(list);
-        for (Book book: books) {
+        for (Book book : books) {
             if (book.getGenre().equals(genre)) {
                 System.out.println("You need to change genre for book " + book);
                 book.setGenre((Genre) getFromUser(genres, AvailableObjects.GENRE));

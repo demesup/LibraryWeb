@@ -46,11 +46,11 @@ public class Author extends LibraryObjects {
     public LibraryObjects remove(List<? extends LibraryObjects> list) throws IOException, ObjectDoesNotExist {
         Author author = (Author) super.remove(list);
         for (Book book : books) {
-            if (book.getAuthor().equals(author)){
+            if (book.getAuthor().equals(author)) {
                 System.out.println("You need to change author for book " + book);
                 Author authorNew = (Author) getFromUser(authors, AvailableObjects.AUTHOR);
                 book.setAuthor(authorNew);
-                int index = findObject(authors,authorNew.name);
+                int index = findObject(authors, authorNew.name);
                 authors.get(index).addBook(book);
             }
         }
