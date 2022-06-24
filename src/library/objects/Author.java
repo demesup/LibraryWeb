@@ -48,7 +48,10 @@ public class Author extends LibraryObjects {
         for (Book book : books) {
             if (book.getAuthor().equals(author)){
                 System.out.println("You need to change author for book " + book);
-                book.setAuthor((Author) getFromUser(authors, AvailableObjects.AUTHOR));
+                Author authorNew = (Author) getFromUser(authors, AvailableObjects.AUTHOR);
+                book.setAuthor(authorNew);
+                int index = findObject(authors,authorNew.name);
+                authors.get(index).addBook(book);
             }
         }
         return null;
