@@ -1,6 +1,10 @@
 package library;
 
 import library.enums.AvailableActions;
+import library.enums.AvailableObjects;
+import library.exceptions.ObjectAlreadyExistException;
+import library.objects.Author;
+import library.objects.Genre;
 import library.objects.LibraryObjects;
 
 import java.io.BufferedReader;
@@ -13,6 +17,40 @@ public class ExtraMethods {
 
     static BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
+    public static LibraryObjects getFromUser(List<? extends LibraryObjects> list, AvailableObjects field) {
+        try {
+            int index;
+            if (list.size() > 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.println(i + " " + list.get(i));
+                }
+                System.out.println("Enter number or -1 to create new");
+                index = readNumber();
+            } else {
+                System.out.println("List is empty.");
+                index = -1;
+            }
+            if (index == -1) {
+                System.out.println("Adding new...");
+                switch (field) {
+                    case AUTHOR:
+                        new Author().add();
+                        break;
+                    case GENRE:
+                        new Genre().add();
+                }
+
+                return getFromUser(list, field);
+            }
+            return list.get(index);
+        } catch (ObjectAlreadyExistException | IndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
+            return getFromUser(list, field);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public static int findObject(List<? extends LibraryObjects> objects, String name) {
         for (LibraryObjects object : objects) {

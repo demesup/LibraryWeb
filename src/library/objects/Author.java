@@ -1,11 +1,11 @@
 package library.objects;
 
-import library.enums.AvailableActions;
-import library.exceptions.ObjectAlreadyExistException;
-import library.exceptions.ObjectDoesNotExist;
+import library.enums.*;
+import library.exceptions.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 import static library.ExtraMethods.*;
 
@@ -29,7 +29,7 @@ public class Author extends LibraryObjects {
                     add();
                     break;
                 case REMOVE:
-                    remove();
+                    remove(authors);
                     break;
                 case PRINT:
                     print(authors);
@@ -42,15 +42,16 @@ public class Author extends LibraryObjects {
         }
     }
 
-    public void remove() throws IOException, ObjectDoesNotExist {
-        if (authors.size() > 0) {
-            System.out.println("Enter surname:");
-            String surname = READER.readLine();
-            int index = findObject(authors, surname);
-            if (index == -1) throw new ObjectDoesNotExist("No author with this name");
-            authors.remove(index);
-            System.out.println("Author is removed");
-        } else System.out.println("Empty authors list");
+    @Override
+    public LibraryObjects remove(List<? extends LibraryObjects> list) throws IOException, ObjectDoesNotExist {
+        Author author = (Author) super.remove(list);
+        for (Book book : books) {
+            if (book.getAuthor().equals(author)){
+                System.out.println("You need to change author for book " + book);
+                book.setAuthor((Author) getFromUser(authors, AvailableObjects.AUTHOR));
+            }
+        }
+        return null;
     }
 
     public void add() throws ObjectAlreadyExistException, IOException {
@@ -70,6 +71,9 @@ public class Author extends LibraryObjects {
         authorsBooks.add(book);
     }
 
+    public void removeBook(Book book) {
+        authorsBooks.remove(book);
+    }
 
     public String authorsBookEachNextLine() {
         StringBuilder builder = new StringBuilder();

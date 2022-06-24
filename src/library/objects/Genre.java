@@ -1,10 +1,12 @@
 package library.objects;
 
 import library.enums.AvailableActions;
+import library.enums.AvailableObjects;
 import library.exceptions.ObjectAlreadyExistException;
 import library.exceptions.ObjectDoesNotExist;
 
 import java.io.IOException;
+import java.util.List;
 
 import static library.ExtraMethods.*;
 
@@ -33,7 +35,7 @@ public class Genre extends LibraryObjects {
                     add();
                     break;
                 case REMOVE:
-                    remove();
+                    remove(genres);
                     break;
                 case PRINT:
                     print(genres);
@@ -59,17 +61,15 @@ public class Genre extends LibraryObjects {
     }
 
     @Override
-    public void remove() throws IOException, ObjectDoesNotExist {
-        if (genres.size() > 0) {
-            System.out.println("Enter genre name:");
-            name = READER.readLine();
-            int index = findObject(genres, name);
-            if (index == -1) throw new ObjectDoesNotExist("No genre with name " + name);
-            genres.remove(index);
-            System.out.println("Genre is removed");
-
-
-        } else System.out.println("Empty genre list");
+    public LibraryObjects remove(List<? extends LibraryObjects> list) throws IOException, ObjectDoesNotExist {
+        Genre genre = (Genre) super.remove(list);
+        for (Book book: books) {
+            if (book.getGenre().equals(genre)) {
+                System.out.println("You need to change genre for book " + book);
+                book.setGenre((Genre) getFromUser(genres, AvailableObjects.GENRE));
+            }
+        }
+        return null;
     }
 
     public String getDescription() {

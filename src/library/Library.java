@@ -1,11 +1,8 @@
 package library;
 
-import library.enums.AvailableActions;
-import library.enums.AvailableObjects;
+import library.enums.*;
 import library.music.Sound;
-import library.objects.Author;
-import library.objects.Book;
-import library.objects.Genre;
+import library.objects.*;
 
 import java.io.*;
 
@@ -15,17 +12,18 @@ import static library.objects.LibraryObjects.*;
 public class Library {
     static BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     static String SEPARATOR = File.separator;
-    static String FILE_NAME = "D:\\IdeaProjects\\Java\\src\\com\\hillel\\homework\\library\\libraryObjects.txt";
+    static String FILE_NAME = "src\\libraryObjects.txt";
 
     static File file = new File(FILE_NAME);
 
     public static void main(String[] args) {
         if (file.length() > 0) getLastSaving();
-        System.out.println("Welcome to library :) Some rules:" +
-                "\n\t1.You can not enter similar names/surnames/titles" +
-                "\n\t2.To save data, you need to exit from program properly(saving occurs in the end, if it is completed you will se the message)" +
-                "\n\t3.Be happy)" +
-                "\nYou can get to the saving by {exit from field-> exit from library}");
+        System.out.println("""
+                Welcome to library :) Some rules:
+                \t1.You can not enter similar names/surnames/titles
+                \t2.To save data, you need to exit from program properly(saving occurs in the end, if it is completed you will se the message)
+                \t3.Be happy)
+                You can get to the saving by {exit from field-> exit from library}""");
         try {
             music();
             start();
@@ -92,12 +90,12 @@ public class Library {
     private static void music() {
         try {
             if (askUser("Do you want to listen classical music while working? Enter yes/ press any key to continue in silence")) {
-                System.out.println("If you enter the number which is not on the list or any other key you will work without music.Press: " +
-                        "\n\t1 - Bach: C Major Prelude and Allemande (French Suite No.2) (5min50sec)" +
-                        "\n\t2 - Mozart: Eine Kleine Nachtmusik (5min51sec)" +
-                        "\n\t3 - Beethoven: Violin romance no 2 (9min50sec)");
-                String path = "src" + SEPARATOR + "com" + SEPARATOR + "hillel" + SEPARATOR + "homework" + SEPARATOR +
-                        "library" + SEPARATOR + "music" + SEPARATOR;
+                System.out.println("""
+                        If you enter the number which is not on the list or any other key you will work without music.Press:\s
+                        \t1 - Bach: C Major Prelude and Allemande (French Suite No.2) (5min50sec)
+                        \t2 - Mozart: Eine Kleine Nachtmusik (5min51sec)
+                        \t3 - Beethoven: Violin romance no 2 (9min50sec)""");
+                String path = "src"  + SEPARATOR + "library" + SEPARATOR + "music" + SEPARATOR;
 
                 File file;
                 switch (readNumber()) {
@@ -105,7 +103,7 @@ public class Library {
                         file = new File(path + "Bach(1).wav");
                         break;
                     case 2:
-                        file = new File("src/com/hillel/homework/library/music/Mozart(2).wav");
+                        file = new File(path + "Mozart(2).wav");
                         break;
                     case 3:
                         file = new File(path + "Beethoven(3).wav");

@@ -1,10 +1,13 @@
 package library.objects;
 
 import library.enums.AvailableActions;
+import library.enums.AvailableObjects;
 import library.exceptions.ObjectAlreadyExistException;
 import library.exceptions.ObjectDoesNotExist;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import static library.ExtraMethods.*;
 
@@ -14,7 +17,8 @@ public class Book extends LibraryObjects {
     private int year;
     private Genre genre;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(String name, String description, int year, Genre genre, Author author) {
         super(name);
@@ -40,7 +44,7 @@ public class Book extends LibraryObjects {
                     add();
                     break;
                 case REMOVE:
-                    remove();
+                    remove(books);
                     break;
                 case PRINT:
                     print(books);
@@ -54,6 +58,15 @@ public class Book extends LibraryObjects {
     }
 
     @Override
+    public LibraryObjects remove(List<? extends LibraryObjects> list) throws IOException, ObjectDoesNotExist {
+        Book book = (Book) super.remove(list);
+        String authorName = book.getAuthor().name;
+        int index = findObject(authors, authorName);
+        authors.get(index).removeBook(book);
+        return null;
+    }
+
+    @Override
     public void add() throws ObjectAlreadyExistException, IOException {
         System.out.println("Enter book title");
         String title = READER.readLine();
@@ -62,8 +75,10 @@ public class Book extends LibraryObjects {
         String description = READER.readLine();
         int year = getYearFromUser();
 
-        Genre genre = getGenreFromUser();
-        Author author = getAuthorFromUser();
+        System.out.println("Genre: ");
+        Genre genre = (Genre) getFromUser(genres, AvailableObjects.GENRE);
+        System.out.println("Author: ");
+        Author author = (Author) getFromUser(authors, AvailableObjects.AUTHOR);
         Book book = new Book(title, description, year, genre, author);
 
         authors.get(findObject(authors, author.getName())).addBook(book);
@@ -71,55 +86,7 @@ public class Book extends LibraryObjects {
         System.out.println("Book is added");
     }
 
-    private Author getAuthorFromUser() throws ObjectAlreadyExistException, IOException {
-        try {
-            int authorIndex;
-            System.out.println("Authors: ");
-            if (authors.size() > 0) {
-                for (int i = 0; i < authors.size(); i++) {
-                    System.out.println(i + " " + authors.get(i));
-                }
-                System.out.println("Enter number of author or -1 to create new");
-                authorIndex = readNumber();
-            } else {
-                System.out.println("Author list is empty. Adding new");
-                authorIndex = -1;
-            }
-            if (authorIndex == -1) {
-                new Author().add();
-                return getAuthorFromUser();
-            }
-            return authors.get(authorIndex);
-        } catch (ObjectAlreadyExistException | IndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-            return getAuthorFromUser();
-        }
-    }
 
-    private Genre getGenreFromUser() throws ObjectAlreadyExistException, IOException {
-        try {
-            int genreIndex;
-            System.out.println("Genres: ");
-            if (genres.size() > 0) {
-                for (int i = 0; i < genres.size(); i++) {
-                    System.out.println(i + " " + genres.get(i));
-                }
-                System.out.println("Enter number of genre or -1 to create new");
-                genreIndex = readNumber();
-            } else {
-                System.out.println("Genre list is empty. Adding new");
-                genreIndex = -1;
-            }
-            if (genreIndex == -1) {
-                new Genre().add();
-                return getGenreFromUser();
-            }
-            return genres.get(genreIndex);
-        } catch (ObjectAlreadyExistException | IndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-            return getGenreFromUser();
-        }
-    }
 
     private int getYearFromUser() {
         int year = 0;
@@ -137,18 +104,6 @@ public class Book extends LibraryObjects {
             getYearFromUser();
         }
         return year;
-    }
-
-    @Override
-    public void remove() throws ObjectDoesNotExist, IOException {
-        if (books.size() > 0) {
-            System.out.println("Enter name");
-            String title = READER.readLine();
-            int index = findObject(books, title);
-            if (index == -1) throw new ObjectDoesNotExist("No book with name " + name);
-            books.remove(index);
-            System.out.println("Book is removed");
-        } else System.out.println("Empty book list");
     }
 
     public Author getAuthor() {
