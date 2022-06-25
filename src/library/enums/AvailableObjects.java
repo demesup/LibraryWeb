@@ -5,13 +5,13 @@ public enum AvailableObjects {
     BOOK("Book"),
     GENRE("Genre");
 
-    private final String translation;
+    private final String className;
 
-    AvailableObjects(String translation) {
-    this.translation = translation;
+    AvailableObjects(String className) {
+    this.className = className;
     }
 
     public String getClassName(){
-        return translation;
+        return className;
     }
 }

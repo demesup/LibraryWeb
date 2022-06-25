@@ -1,8 +1,7 @@
 package library.objects;
 
 import library.enums.AvailableActions;
-import library.exceptions.ObjectAlreadyExistException;
-import library.exceptions.ObjectDoesNotExist;
+import library.exceptions.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;

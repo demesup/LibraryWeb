@@ -1,11 +1,8 @@
 package library;
 
-import library.enums.AvailableActions;
-import library.enums.AvailableObjects;
-import library.exceptions.ObjectAlreadyExistException;
-import library.objects.Author;
-import library.objects.Genre;
-import library.objects.LibraryObjects;
+import library.enums.*;
+import library.exceptions.*;
+import library.objects.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
