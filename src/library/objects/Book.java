@@ -70,7 +70,9 @@ public class Book extends LibraryObjects {
     public void add() throws ObjectAlreadyExistException, IOException {
         System.out.println("Enter book title");
         String title = READER.readLine();
-        if (findObject(books, title) != -1) throw new ObjectAlreadyExistException("Book already exist");
+        if (checkIfHave(books, title)) {
+            throw new ObjectAlreadyExistException("Book already exist");
+        }
         System.out.println("Enter book description in 1 line");
         String description = READER.readLine();
         int year = getYearFromUser();

@@ -12,7 +12,9 @@ import static library.objects.LibraryObjects.*;
 public class Library {
     static BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     static String SEPARATOR = File.separator;
-    static String FILE_NAME ="C:\\Users\\User\\IdeaProjects\\Library1\\src\\libraryObjects.txt";
+    static String PATH_TO_FILES = "C:" +SEPARATOR + "Users" + SEPARATOR + "User" + SEPARATOR+ "IdeaProjects" + SEPARATOR
+            +"Library1" + SEPARATOR + "src" + SEPARATOR;
+    static String FILE_NAME =PATH_TO_FILES + "libraryObjects.txt";
 
     static File file = new File(FILE_NAME);
 
@@ -27,7 +29,6 @@ public class Library {
             music();
             start();
             save();
-            System.out.println("Saved");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -81,6 +82,7 @@ public class Library {
                 oos.writeObject(genre);
             }
 
+            System.out.println("Saved");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -96,8 +98,7 @@ public class Library {
                         "\n\t2 - Mozart: Alla turca from Piano Sonata No 11 (5min51sec)" +
                         "\n\t3 - Beethoven: Violin romance no 2 (9min50sec)" +
                         "\n\t4 - Bach: C Major Prelude and Allemande (French Suite No.2) (5min52sec)");
-                String path = "C:" + SEPARATOR + "Users" + SEPARATOR + "User" + SEPARATOR + "IdeaProjects" + SEPARATOR +
-                        "Library1" + SEPARATOR + "src" + SEPARATOR + "library" + SEPARATOR + "music" + SEPARATOR;
+                String path = PATH_TO_FILES + "music" + SEPARATOR;
 
                 File file;
                 switch (readNumber()) {

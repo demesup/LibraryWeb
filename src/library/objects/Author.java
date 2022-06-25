@@ -60,8 +60,7 @@ public class Author extends LibraryObjects {
     public void add() throws ObjectAlreadyExistException, IOException {
         System.out.println("Enter surname:");
         String surname = READER.readLine();
-        int index = findObject(authors, surname);
-        if (index != -1) {
+        if (checkIfHave(authors, surname)) {
             throw new ObjectAlreadyExistException("Author already exist");
         }
         System.out.println("Enter firstname");
